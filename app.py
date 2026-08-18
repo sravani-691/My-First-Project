@@ -56,23 +56,21 @@ Keep it insightful and actionable.
     # End of the big prompt/instructions to ChatGPT
 
     response = client.chat.completions.create(
-        # This sends the instructions to the AI and waits for an answer.
-         model="llama-3.3-70b-versatile",
-        extra_headers={
-            ""
-            "HTTP-Referer": "",
-            "X-OpenRouter-Title": "Product Analysis Dashboard",
-        },
-        extra_body={},
-        messages=[
-            # Create a list of messages (the conversation)
-            {"role": "system", "content": system_prompt},
-            # The first message: Here's the job description (act like a business analyst)
+    model="llama-3.3-70b-versatile",
+    extra_headers={
+        "HTTP-Referer": "",
+        "X-OpenRouter-Title": "Product Analysis Dashboard",
+    },
+    extra_body={},
+    messages=[
+        # Create a list of messages (the conversation)
+        {"role": "system", "content": system_prompt},
+        # The first message: Here's the job description (act like a business analyst)
 
-            {"role": "user", "content": user_prompt},
-            # The second message: Here's what I want you to analyze (the product name and requirements)
-        ],
-    )
+        {"role": "user", "content": user_prompt},
+        # The second message: Here's what I want you to analyze (the product name and requirements)
+    ],
+)
     # End of sending the request to ChatGPT
 
     return response.choices[0].message.content
