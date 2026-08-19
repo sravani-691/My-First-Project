@@ -4,8 +4,11 @@ from datetime import datetime
 from groq import Groq
 from dotenv import load_dotenv
 load_dotenv()
+groq_api_key = os.getenv("GROQ_API_KEY") or os.getenv("Groq_API_Key")
+if not groq_api_key:
+    raise RuntimeError("Set GROQ_API_KEY in the environment or .env file.")
 
-client = Groq()
+client = Groq(api_key=groq_api_key)
 def analyze_product(product_name):
     """Single agent: one Groq call that returns a full product-analysis report."""
 
@@ -31,12 +34,7 @@ Keep it insightful and actionable.
 """
 
     response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        extra_headers={
-            "HTTP-Referer": "",
-            "X-OpenRouter-Title": "Product Analysis Dashboard",
-        },
-        extra_body={},
+        model="groq/compound-mini",
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
